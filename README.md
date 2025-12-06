@@ -1,4 +1,4 @@
-# IEDC EMEA Students Scoring App
+# Connect EMEA interns Manager
 
 This is a web application designed for the IEDC EMEA community to manage and track students' scores across various events. The app interacts with Airtable to fetch and store event data, allowing admins to easily manage events and student scores.
 
@@ -34,7 +34,7 @@ This is a web application designed for the IEDC EMEA community to manage and tra
 To get started with the project, clone the repository and follow the setup instructions:
 
 ```bash
-git clone https://github.com/muhammedshamil8/iedc-emea-scoring-app.git
-cd iedc-emea-scoring-app
+git clone https://github.com/muhammedshamil8/interns_manager.git
+cd interns_manager
 npm install
 npm run dev
