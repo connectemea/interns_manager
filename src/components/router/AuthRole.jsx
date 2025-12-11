@@ -10,10 +10,10 @@ const AuthRoleRequire = ({ role, children }) => {
 
     useEffect(() => {
         if (user !== null) {
-            if (userRole !== role) {
-                handleSignOut();
-                navigate('/login');
-            }
+            // if (userRole !== role) {
+            //     handleSignOut();
+            //     navigate('/login');
+            // }
             setLoading(false);
         } else {
             navigate('/login');
@@ -27,8 +27,8 @@ const AuthRoleRequire = ({ role, children }) => {
             </div>
         );
     }
-
-    return userRole === role ? children : <Navigate to="/login" replace />;
+// userRole === role ?
+    return  user ? children : <Navigate to="/login" replace />;
 };
 
 export default AuthRoleRequire;

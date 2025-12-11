@@ -3,7 +3,8 @@ import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom'
 import {
   Home,
   Login,
-  ScoreList
+  ScoreList,
+  MyScore
 } from './pages';
 import {
   AdminLayout,
@@ -36,6 +37,10 @@ const router = createBrowserRouter([
   {
     path: "/scoreboard",
     element: <ScoreList />,
+  },
+  {
+    path: "/myscore",
+    element: <MyScore />,
   },
   {
     path: "/admin",

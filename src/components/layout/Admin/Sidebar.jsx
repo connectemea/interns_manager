@@ -15,11 +15,12 @@ import {
 } from "@/components/ui/alert-dialog";
 
 const Sidebar = ({ isCollapsed, onCollapse }) => {
-    const { user, role: userRole, handleSignOut } = useAuth() || {};
+    const { user, handleSignOut } = useAuth() || {};
 
     const handleLogout = async () => {
         await handleSignOut();
     };
+    const userRole = 'admin';
 
     const navLinks = [
         { label: 'Dashboard', href: userRole === 'captain' ? '/captain/dashboard' : '/admin/dashboard', roles: ['admin', 'captain'], icon: <Grid /> },

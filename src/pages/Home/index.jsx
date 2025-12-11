@@ -143,6 +143,14 @@ function Home() {
                         <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
                             IEDC Events
                         </h1>
+                        <div className="flex flex-wrap justify-center md:justify-start gap-4">
+                        <NavLink
+                            to="/myscore"
+                            className="flex items-center gap-2 px-4 py-2 mr-4 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-all duration-300 shadow-lg hover:shadow-green-500/20"
+                        >
+                            <Monitor size={18} />
+                            My Score
+                        </NavLink>
                         <NavLink
                             to="/scoreboard"
                             className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-all duration-300 shadow-lg hover:shadow-blue-500/20"
@@ -151,6 +159,8 @@ function Home() {
                             View Scoreboard
                             <ExternalLink size={16} />
                         </NavLink>
+                        </div>
+
                     </header>
 
                     <div className="relative mb-8 max-w-2xl mx-auto">
