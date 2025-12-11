@@ -61,11 +61,13 @@ const memberSchema = z.object({
   }),
   Position: z.string().min(1, { message: "Position is required" }),
   Active: z.boolean().optional(),
- Bonus_points: z
-  .number()
-  .min(0, { message: "Bonus points cannot be negative" })
-  .default(0)
-  .or(z.string().transform((v) => Number(v) || 0)),
+  Bonus_points: z
+    .number()
+    .min(0, { message: "Bonus points cannot be negative" })
+    .default(0)
+    .or(z.string().transform((v) => Number(v) || 0)),
+  Admission_no: z.string().optional(),
+  email: z.string().email("Invalid email").optional(),
 });
 
 function MemberForm() {
@@ -87,6 +89,8 @@ function MemberForm() {
       Position: "",
       Active: true,
       Bonus_points: 0,
+      Admission_no: "",
+      email: "",
     },
   });
 
@@ -110,6 +114,9 @@ function MemberForm() {
         form.setValue("Position", Records.fields.Position || "");
         form.setValue("Active", Records.fields.Active ?? true);
         form.setValue("Bonus_points", Records.fields.Bonus_points || 0);
+        form.setValue("Admission_no", Records.fields.Admission_no || "");
+        form.setValue("email", Records.fields.email || "");
+
         setLoading(false);
       }
     } catch (error) {
@@ -154,15 +161,13 @@ function MemberForm() {
 
   const positionOptions = [
     { label: "Lead", value: "Lead" },
-    { label: "Program Organizer", value: "Program Organizer" },
     { label: "Content Writer", value: "Content writer" },
-    { label: "Working member", value: "Working member" },
+    { label: "Intern", value: "Intern" },
     { label: "Media", value: "Media" },
-    { label: "Marketing", value: "Marketing" },
     { label: "Graphic designer", value: "Graphic designer" },
     { label: "Video editor/photographer", value: "Video editor/photographer" },
     { label: "Community Manager", value: "Community Manager" },
-    { label: "Technical Team", value: "Technical Team" },
+    { label: "Technical", value: "Technical" },
   ];
 
   const years = [
@@ -277,6 +282,46 @@ function MemberForm() {
                           </FormItem>
                         )}
                       />
+                      <FormField
+                        control={form.control}
+                        name="Admission_no"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel className="text-gray-700">
+                              Admission Number (optional)
+                            </FormLabel>
+                            <FormControl>
+                              <Input
+                                placeholder="Enter admission number"
+                                {...field}
+                                className="bg-gray-50 border-gray-300"
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+
+                      <FormField
+                        control={form.control}
+                        name="email"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel className="text-gray-700">
+                              Email (optional)
+                            </FormLabel>
+                            <FormControl>
+                              <Input
+                                placeholder="Enter email"
+                                type="email"
+                                {...field}
+                                className="bg-gray-50 border-gray-300"
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
                     </div>
 
                     {/* Organization Information Section */}
@@ -294,42 +339,44 @@ function MemberForm() {
                             <FormLabel className="text-gray-700">
                               Department
                             </FormLabel>
-                            <FormControl>
-                              <div className="relative">
-                                <Input
-                                  placeholder="Search department..."
-                                  className="mb-2 bg-gray-50 border-gray-300"
-                                  onChange={(e) => {
-                                    const q = e.target.value.toLowerCase();
-                                    setFilteredDepartments(
-                                      departments.filter((d) =>
-                                        d.label.toLowerCase().includes(q)
-                                      )
-                                    );
-                                  }}
-                                />
+                            <Select
+                              onValueChange={field.onChange}
+                              value={field.value}
+                            >
+                              <FormControl>
+                                <SelectTrigger className="bg-gray-50 border-gray-300">
+                                  <SelectValue placeholder="Select department" />
+                                </SelectTrigger>
+                              </FormControl>
 
-                                <Select
-                                  onValueChange={field.onChange}
-                                  value={field.value}
-                                >
-                                  <SelectTrigger className="bg-gray-50 border-gray-300">
-                                    <SelectValue placeholder="Select department" />
-                                  </SelectTrigger>
+                              <SelectContent>
+                                {/* Search inside dropdown */}
+                                <div className="p-2">
+                                  <Input
+                                    placeholder="Search..."
+                                    className="bg-gray-50 border-gray-300"
+                                    onChange={(e) => {
+                                      const q = e.target.value.toLowerCase();
+                                      setFilteredDepartments(
+                                        departments.filter((d) =>
+                                          d.label.toLowerCase().includes(q)
+                                        )
+                                      );
+                                    }}
+                                  />
+                                </div>
 
-                                  <SelectContent>
-                                    {filteredDepartments.map((department) => (
-                                      <SelectItem
-                                        key={department.value}
-                                        value={department.value}
-                                      >
-                                        {department.label}
-                                      </SelectItem>
-                                    ))}
-                                  </SelectContent>
-                                </Select>
-                              </div>
-                            </FormControl>
+                                {/* Options */}
+                                {filteredDepartments.map((department) => (
+                                  <SelectItem
+                                    key={department.value}
+                                    value={department.value}
+                                  >
+                                    {department.label}
+                                  </SelectItem>
+                                ))}
+                              </SelectContent>
+                            </Select>
 
                             <FormMessage className="text-red-600" />
                           </FormItem>
